@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly JS -->
+</head>
+<style>
+    
+    .logo {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align:center;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #333;
+    }
+</style>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+        <h1 class="logo">Predict the Future of Your Investments</h1>
+    </header>
+    </div>
+        <h1>         </h1>
+        <form method="POST" action="/">
+            <input type="text" name="ticker" placeholder="Enter stock ticker (e.g., AAPL)" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if ticker %}
+        <h2>Results for {{ ticker }}</h2>
+
+        <h3>Stock Price Prediction Graph:</h3>
+        <div id="graph">
+            {{ plot_div|safe }} <!-- Display the Plotly graph -->
+        </div>
+
+        <h3>News Articles:</h3>
+        {% for article in articles %}
+        <div class="article">
+            <h4><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></h4>
+            <p>{{ article.content }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
