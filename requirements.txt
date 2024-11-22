@@ -1,0 +1,14 @@
+pip install yfinance
+pip install numpy
+pip install pandas
+pip install scikit-learn
+pip install tensorflow
+pip install matplotlib
+pip install requests
+pip install keras
+pip install feedparser
+pip install xgboost
+pip install textblob
+pip install flask
+pip install plotly
+
