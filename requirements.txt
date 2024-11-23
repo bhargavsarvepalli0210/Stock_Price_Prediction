@@ -1,14 +1,8 @@
-pip install yfinance
-pip install numpy
-pip install pandas
-pip install scikit-learn
-pip install tensorflow
-pip install matplotlib
-pip install requests
-pip install keras
-pip install feedparser
-pip install xgboost
-pip install textblob
-pip install flask
-pip install plotly
-
+Flask==2.2.5
+numpy==1.24.3
+pandas==2.0.3
+yfinance==0.2.31
+requests==2.31.0
+xgboost==1.7.6
+textblob==0.17.1
+plotly==5.16.1
