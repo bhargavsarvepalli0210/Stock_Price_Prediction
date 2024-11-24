@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly JS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<script>
+    // Get references to the input and button elements
+    // const inputField = document.getElementsByClassName('mybutton');
+    // const submitButton = document.getElementById('dsub');
+
+    // // Add an event listener to detect input changes
+    // inputField.addEventListener('input', () => {
+    //     // Enable the button if there's text, otherwise keep it disabled
+    //     submitButton.disabled = inputField.value.trim() === '';
+    // });
+
+
+    function showPopup() {
+        console.log("result is ");
+        document.getElementsByClassName("display").style.display = "block";
+        $('#myModal').modal('show');
+    }
+</script>
+<style>
+    .display {
+        display: block;
+    }
+
+    .logo {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .modal {
+        /* display: none; Hidden by default */
+        display: "block";
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #container {
+        height: 400px;
+        min-width: 310px;
+    }
+
+    .middle {
+        margin: 0% 50%;
+    }
+
+    .mybutton {
+        font-size: 25px;
+        width: 550px !important;
+        border-radius: 20px 0 0 20px !important;
+        border: black 2px solid !important;
+    }
+
+    .submit_btn {
+        border-radius: 0 20px 20px 0 !important;
+        width: 100px !important;
+        height: 65px !important;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <div class="container-own">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+            <h1 class="logo">Predict the Future of Your Investments</h1>
+            <div class="choose-button">
+                <a class="slide-button active" href="{{ url_for('select_form') }}">All Tickers Prices Visualize</a>
+                <a class="slide-button" href="{{ url_for('Get_Started') }}">Ticker Codes Graph</a>
+            </div>
+        </header>
+    </div>
+    <h1>Set your investment price and explore Indian stocks that align with your desired price!</h1>
+    <form method="POST" action="/add-price">
+        <input class="mybutton" type="text" name="price" placeholder="Enter a price to visualize its price journey ahead!" required>
+        <button type="submit" onclick="showPopup()" class="submit_btn" id="dsub">Submit</button>
+    </form>
+
+    <div class="display" id="style">
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Your Request has been Processed, Please Wait Some
+                            time</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="spinner-border middle" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if response %}
+    <h1>The Entered Price is <b>&#8377 {{value}}</b></h1>
+    <table class="container-own table col-6 table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in response[(page-1) * limit: (limit * (page-1)) + limit] %}
+            <tr>
+                <th style="font-size: 20px;" scope="row">{{loop.index + (limit * (page-1))}}</th>
+                <td style="font-size: 20px;"><b>{{ item.name }} ({{item.ticker}})</b></td>
+                <td style="font-size: 25px;"><b>&#8377: </b> {{ item.indian_price | round(2) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav class="middle" aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page * limit > limit %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('add_price', price=value, response=None | safe, page=page-1) }}"
+                    aria-label="Previous">
+                    <span aria-hidden="true" onclick="showPopup()">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="#">{{ page*limit // limit }}</a></li>
+            {% if page*limit < response | length %} 
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('add_price', price=value, response=None | safe, page=page+1) }}" aria-label="Next">
+                        <span aria-hidden="true" onclick="showPopup()">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
