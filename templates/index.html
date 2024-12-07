@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #007BFF;
+        }
+
+        form {
+            text-align: center;
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        form .input-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Allows input to take up full width on smaller screens */
+        }
+
+        form input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px auto; /* Centers the button */
+            display: block; /* Makes button take full width on smaller screens */
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        .article {
+            margin: 10px 0;
+        }
+
+        .article h4 a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .article h4 a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            form input {
+                width: 90%;
+                max-width: none; /* Overrides the max-width for responsiveness */
+                margin: 5px 0;
+            }
+
+            form .input-container {
+                flex-direction: column; /* Stacks label and input vertically */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            form input {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            form button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('stocks') }}">Find Companies</a></li>
+                </ul>
+            </nav>
+            <h1 class="logo">Predict the Future of Your Investments</h1>
+        </header>
+
+        <form method="POST" action="/">
+            <div class="input-container">
+                <label for="ticker">Enter stock ticker (e.g., AAPL):</label>
+                <input type="text" id="ticker" name="ticker" placeholder="Enter stock ticker (e.g., AAPL)" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if ticker %}
+        <h2>Results for {{ ticker }}</h2>
+
+        <h3>Stock Price Prediction Graph:</h3>
+        <div id="graph">
+            <img src="data:image/png;base64,{{ img_str }}" alt="Stock Price Prediction Graph">
+        </div>
+
+        <h3>News Articles:</h3>
+        {% for article in articles %}
+        <div class="article">
+            <h4><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></h4>
+            <p>{{ article.content }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

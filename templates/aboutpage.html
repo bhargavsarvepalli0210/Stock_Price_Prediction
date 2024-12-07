@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-bottom: 50px;
+  }
+
+  header {
+    width: 100%;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  nav li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+  }
+
+  /* Guide Container Styling */
+  .guide-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  .guide-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+  }
+
+  .guide-container:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Team Cards Container */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* Team Cards Styling */
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+  }
+
+  .card:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Text Styling */
+  .card h2, .guide-container h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards;
+    animation-delay: 0.5s;
+  }
+
+  .card p, .guide-container p {
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeIn 1.4s ease forwards;
+    animation-delay: 0.7s;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('homepage') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('stocks') }}">Find Companies</a></li>
+        
+      </ul>
+    </nav>
+    <h1 class="logo">Predict the Future of Your Investments</h1>
+</header>
+
+<h1>Meet Our Guide</h1>
+
+<div class="guide-container">
+    <img src="{{ url_for('static', filename='images/guide.jpg') }}" alt="Guide Name">
+    <h2>M.Sivapratap Reddy</h2>
+    <p>Assistant Professor</p>
+    <p><b>Project Guide</b></p>
+</div>
+
+<h1>Meet Our Team</h1>
+
+<div class="container">
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/prathima_img.jpg') }}" alt="Prathima Vallabaneni">
+    <h2>Prathima Vallabaneni</h2>
+    <p>Team Lead</p>
+  </div>
+
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/my_image.jpg') }}" alt="Bhargav Sarvepalli">
+    <h2>Bhargav Sarvepalli</h2>
+    <p>Team Member</p>
+  </div>
+
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/sample.jpg') }}" alt="Aruna Turaka">
+    <h2>Aruna Turaka</h2>
+    <p>Team Member</p>
+  </div>
+  
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/sample1.jpg') }}" alt="Praveen Kumar">
+    <h2>Praveen Kumar Pallala</h2>
+    <p>Team Member</p>
+  </div>
+  
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/rajesh_img.jpg') }}" alt="Venkata Rajesh">
+    <h2>Venkata Rajesh Sanisetty</h2>
+    <p>Team Member</p>
+  </div>
+</div>
+
+</body>
+</html>
