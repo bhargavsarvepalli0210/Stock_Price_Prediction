@@ -1,0 +1,10 @@
+Flask==2.2.3
+matplotlib==3.5.3
+numpy==1.23.6
+pandas==1.5.2
+yfinance==0.1.82
+requests==2.28.2
+xgboost==1.7.5
+textblob==0.15.3
+plotly==5.9.0
+scikit-learn==1.1.3
