@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
-from urllib.parse import quote
+
+from urllib.parse import quote as url_quote
+
 
 import numpy as np
 import pandas as pd
