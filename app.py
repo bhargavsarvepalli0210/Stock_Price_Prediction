@@ -163,7 +163,7 @@ def predict_future_prices(model, test_data, features):
 
 # Prepare Matplotlib plot as a base64 encoded string
 def create_matplotlib_plot(stock_data, predictions):
-    fig, ax = plt.subplots(figsize=(14, 6))
+    fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(stock_data['Date'], stock_data['Close'], label='Historical Prices', color='green')
     ax.plot(pd.date_range(start=pd.Timestamp.today(), periods=len(predictions), freq='B'), predictions, label='Predicted Prices', color='blue')
     ax.set_title('Stock Price Prediction')
