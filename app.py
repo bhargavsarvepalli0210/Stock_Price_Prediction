@@ -267,4 +267,8 @@ def stock_price():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get the port from the environment variable, defaulting to 5000 if not set
+    PORT = int(os.environ.get('PORT', 5000))
+    
+    # Run the Flask app on the specified port
+    app.run(host='0.0.0.0', port=PORT, debug=True)
